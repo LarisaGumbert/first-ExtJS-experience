@@ -529,21 +529,18 @@
      */
     "builds": {
         "classic": {
+            "default": true,
             "toolkit": "classic",
-            "theme": "theme-aria",
-            "sass": {
-                // "save": "classic/sass/save.json"
-            }
+            "theme": "theme-neptune"
         },
 
         "modern": {
             "toolkit": "modern",
-            "theme": "theme-triton",
-            "sass": {
-                // "save": "modern/sass/save.json"
-            }
+            "theme": "theme-triton"
         },
-        "web": {"default": true},
+
+        //"web": {"default": true},
+
         "mobile": {
             "packager": "cordova",
             "cordova" : {

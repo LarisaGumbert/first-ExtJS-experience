@@ -76,18 +76,18 @@ Ext.define('TestApp01.view.main.Main', {
     },
 
     items: [{
-        title: 'Home',
+        title: 'Form',
         iconCls: 'fa-home',
         // The following grid shares a store with the classic version's grid as well!
         items: [{
             xtype: 'mainlist'
         }]
     }, {
-        title: 'Users',
+        title: 'Scheduler',
         iconCls: 'fa-user',
-        bind: {
-            html: '{loremIpsum}'
-        }
+        items: [{
+            xtype: 'scheduler'
+        }]
     }, {
         title: 'Groups',
         iconCls: 'fa-users',

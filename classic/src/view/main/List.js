@@ -25,17 +25,20 @@ Ext.define('TestApp01.view.main.List', {
         },
         {
             xtype: 'textfield',
+            inputType: 'email',
             fieldLabel: 'Email',
-            afterBodyEl: '(Your email address will be your user name)'
+            afterBodyEl: '<span class="field-subscript">(Your email address will be your user name)</span>'
         },
         {
             xtype: 'textfield',
+            inputType: 'email',
             fieldLabel: 'Re-type Email'
         },
         {
             xtype: 'textfield',
+            inputType: 'password',
             fieldLabel: 'Password',
-            afterBodyEl: '(Min 8 chars, 1 number, case-sensitive)'
+            afterBodyEl: '<span class="field-subscript">(Min 8 chars, 1 number, case-sensitive)</span>'
         },
         {
             xtype: 'textfield',
@@ -46,18 +49,15 @@ Ext.define('TestApp01.view.main.List', {
             fieldLabel: 'City'
         },
         {
-            xtype: 'combo',
+            xtype: 'combobox',
             fieldLabel: 'State',
             autoSelect: false,
             store: [ "First State", "Second State", "Third State", "Forth State", "Fifth State" ],
             emptyText: 'Choose a state'
         },
         {
-            xtype: 'panel',
-            layout: {
-                type: 'hbox',
-                align: 'left'
-            },
+            xtype: 'container',
+            layout: 'hbox',
             items: [
                 {
                     xtype: 'textfield',
@@ -75,44 +75,41 @@ Ext.define('TestApp01.view.main.List', {
             margin: '0 0 5 0'
         },
         {
-            xtype: 'panel',
-            layout: {
-                type: 'hbox',
-                align: 'left'
-            },
+            xtype: 'container',
+            layout: 'hbox',
             items: [
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Pnone',
-                    afterBodyEl: 'No spaces or dashes',
+                    afterBodyEl: '<span class="field-subscript">No spaces or dashes</span>',
                     flex: 1
                 },
                 {
                     xtype: 'image',
-                    src: 'resources\\help16.png',
+                    src: 'resources/help16.png',
                     alt: 'help',
-                    margin: '0 5 0 0'
+                    margin: '0 5 0 0',
+                    width: 16,
+                    height: 16
                 },
                 {
-                    xtype: 'combo',
+                    xtype: 'combobox',
                     hideLabel: true,
                     store: {type: 'phonetype'},
                     valueField: 'id',
                     displayField: 'name',
-                    value: 1
+                    value: 1,
+                    flex: 1
                 }
             ],
             margin: '0 0 5 0'
         },
         {
-            xtype: 'panel',
-            layout: {
-                type: 'hbox',
-                align: 'left'
-            },
+            xtype: 'container',
+            layout: 'hbox',
             items: [
                 {
-                    xtype: 'combo',
+                    xtype: 'combobox',
                     fieldLabel: 'Date of Birth',
                     store: ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
                     valueField: 'id',
@@ -122,7 +119,7 @@ Ext.define('TestApp01.view.main.List', {
                     flex: 2
                 },
                 {
-                    xtype: 'combo',
+                    xtype: 'combobox',
                     hideLabel: true,
                     store: (function() { var arr= []; for (var i = 1; i <= 31; arr.push(i), i++){} return arr;})(),
                     valueField: 'id',
@@ -132,7 +129,7 @@ Ext.define('TestApp01.view.main.List', {
                     flex: 1
                 },
                 {
-                    xtype: 'combo',
+                    xtype: 'combobox',
                     hideLabel: true,
                     store: (function() { var arr= []; for (var i = 1950; i <= new Date().getFullYear(); arr.push(i), i++){} return arr;})(),
                     valueField: 'id',
@@ -143,29 +140,28 @@ Ext.define('TestApp01.view.main.List', {
                 },
                 {
                     xtype: 'image',
-                    src: 'resources\\help16.png',
+                    src: 'resources/help16.png',
                     alt: 'help',
-                    margin: '0 5 0 0'
+                    margin: '0 5 0 0',
+                    width: 16,
+                    height: 16
                 }
             ],
             margin: '0 0 5 0'
         },
         {
-            xtype: 'combo',
+            xtype: 'combobox',
             fieldLabel: 'Gender',
             autoSelect: false,
             store: [ "Male", "Female" ],
             emptyText: 'Choose a gender'
         },
         {
-            xtype: 'panel',
-            layout: {
-                type: 'hbox',
-                align: 'left'
-            },
+            xtype: 'container',
+            layout: 'hbox',
             items: [
                 {
-                    xtype: 'combo',
+                    xtype: 'combobox',
                     fieldLabel: 'Security Question',
                     store: ['Mother\'s maiden name' , 'Dog\'s name', 'Whatever...'],
                     valueField: 'id',
@@ -176,8 +172,10 @@ Ext.define('TestApp01.view.main.List', {
                 },
                 {
                     xtype: 'image',
-                    src: 'resources\\help16.png',
-                    alt: 'help'
+                    src: 'resources/help16.png',
+                    alt: 'help',
+                    width: 16,
+                    height: 16
                 }
             ],
             margin: '0 0 5 0'
@@ -185,7 +183,7 @@ Ext.define('TestApp01.view.main.List', {
         {
             xtype: 'textfield',
             fieldLabel: 'Security answer',
-            afterBodyEl: '(Not case-sensitive)'
+            afterBodyEl: '<span class="field-subscript">(Not case-sensitive)</span>'
         }
     ]
 });

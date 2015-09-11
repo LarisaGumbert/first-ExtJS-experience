@@ -2,34 +2,41 @@ Ext.define('TestApp01.view.main.Scheduler', {
     extend: 'Ext.panel.Panel',
     xtype: 'scheduler',
     layout: 'hbox',
-
+    requires: [
+        'TestApp01.store.Schedule'
+    ],
     items: [
         //left panel
         {
             xtype: 'panel',
-            layout: 'vbox',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             collapsible: true,
             collapseDirection: 'left',
             margin: '0 10 0 0',
             items: [
                 {
-                    xtype: 'panel',
-                    layout: 'vbox',
+                    xtype: 'container',
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
+                    },
                     padding: '5',
                     items: [
                         {
                             xtype: 'button',
                             text: 'New Appointment',
-                            icon: 'resources\\\\schedule16.png', //TODO: ask
+                            icon: 'resources/schedule16.png',
                             margin: '0 0 5 0',
-                            //TODO: ask
-                            /*,width: '100%'*/
                             handler: function(button, event) {
                                 alert("Get REST !");
                             }
                         },
                         {
                             xtype: 'datepicker',
+                            startDay: 1,
                             margin: '0 0 5 0',
                             handler: function(picker, date) {
                                 // do something with the selected date
@@ -37,6 +44,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
                         },
                         {
                             xtype: 'datepicker',
+                            startDay: 1,
                             margin: '0 0 5 0',
                             handler: function(picker, date) {
                                 // do something with the selected date
@@ -45,26 +53,26 @@ Ext.define('TestApp01.view.main.Scheduler', {
                     ]
                 },
                 {
-                    xtype: 'panel',
-                    padding: '5',
-                    //TODO: ask
-                    width: 220,
-                    border: true,
+                    xtype: 'container',
+                    height: 2,
+                    border: 1,
                     style: {
-                        borderStyle: 'solid',
-                        borderLeft: 'none',
-                        borderRight: 'none',
-                        borderBottom: 'none'
+                        borderColor: 'silver',
+                        borderStyle: 'solid'
+                    }
+                },
+                {
+                    xtype: 'container',
+                    hidden: true,
+                    padding: '5',
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
                     },
                     items: [
                         {
                             xtype: 'panel',
                             margin: '0 0 25 0',
-                            //TODO: ask why borders
-                            border: false,
-                            style: {
-                                borderStyle: 'none'
-                            },
                             collapsible: true,
                             collapseDirection: 'top',
                             hideCollapseTool: true,
@@ -161,22 +169,45 @@ Ext.define('TestApp01.view.main.Scheduler', {
                             }
                         }
                     ]
+                },
+                {
+                    xtype: 'container',
+                    padding: '5',
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
+                    },
+                    items: [
+                        {
+                            xtype: 'treepanel',
+                            width: 100,
+                            height: 150,
+                            rootVisible: false,
+                            lines: false,
+                            useArrows: true,
+                            store: {type: 'calendar'}
+                        }
+                    ]
                 }
             ]
         },
         //right panel
         {
             xtype: 'panel',
-            layout: 'vbox',
+            flex: 1,
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             header: false,
             tbar: [
                 {
                     xtype: 'button',
-                    icon: 'resources\\\\arrow_left16.png'
+                    icon: 'resources/arrow_left16.png'
                 },
                 {
                     xtype: 'button',
-                    icon: 'resources\\\\arrow_right16.png'
+                    icon: 'resources/arrow_right16.png'
                 },
                 {
                     xtype: 'displayfield',
@@ -184,20 +215,111 @@ Ext.define('TestApp01.view.main.Scheduler', {
                     style: {
                         fontSize: '1.2em'
                     },
-                    value: 'September 2015'
+                    value: (function() { return ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'][new Date().getMonth()] + ' ' + new Date().getFullYear(); })()
                 }
             ],
             items: [
                 {
                     xtype: 'tabpanel',
-                    width: 600,
-                    height: 600,
+                    //flex: 1,
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
+                    },
                     items: [
                         {
-                            title: 'Calendar 1'
+                            title: 'Calendar 1',
+                            flex: 1,
+                            items: [
+                                {
+                                    xtype: 'container',
+                                    layout: 'column',
+                                    defaults: {
+                                        xtype: 'container',
+                                        padding: 5,
+                                        border: true,
+                                        style: {
+                                            border: '1px solid gray',
+                                            backgroundColor: 'silver',
+                                            textAlign: 'center',
+                                            color: 'white',
+                                            textTransform: 'uppercase'
+                                        },
+                                        columnWidth: 0.142857
+                                    },
+                                    items: [
+                                        { html: 'Monday' },
+                                        { html: 'Tuesday' },
+                                        { html: 'Wednesday' },
+                                        { html: 'Thursday' },
+                                        { html: 'Friday' },
+                                        { html: 'Saturday' },
+                                        { html: 'Sunday' }
+                                    ]
+                                },
+                                {
+                                    xtype: 'container',
+                                    items: [
+                                        {
+                                            xtype: 'container',
+                                            layout: 'column',
+                                            defaults: {
+                                                columnWidth: 0.142857,
+                                                xtype: 'container',
+                                                layout: {
+                                                    type: 'vbox',
+                                                    align: 'stretch'
+                                                },
+                                                height: 100,
+                                                border: true,
+                                                style: {
+                                                    border: '1px solid gray'/*,
+                                                    backgroundColor: 'silver',
+                                                    color: 'white'*/
+                                                }
+                                            },
+                                            items:
+                                                (function(date) {
+
+                                                    var result = [];
+                                                    var daysInMonth = Ext.Date.getDaysInMonth(date);
+                                                    var dayOfWeek = new Date(date.setDate(1)).getDay();
+                                                    if (dayOfWeek == 0) dayOfWeek = 7;
+                                                    var blockQty = (7 - (daysInMonth % 7)) + daysInMonth;
+
+                                                    for (var i = 1, d = 1; i <= blockQty; i++) {
+                                                        var block = {};
+                                                        if (d <= daysInMonth && ((i <= 7 && i >= (dayOfWeek)) || (i > 7)))
+                                                        {
+                                                            block = {
+                                                                items: [
+                                                                    {
+                                                                        xtype: 'container',
+                                                                        height: '1.5em',
+                                                                        style: {
+                                                                            backgroundColor: 'silver',
+                                                                            fontWeight: 'bold'
+                                                                        },
+                                                                        html: d
+                                                                    }
+                                                                ]
+                                                            };
+
+                                                            d++;
+                                                        }
+                                                        result.push(block);
+                                                    }
+
+                                                    return result;
+                                                })(new Date())
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
-                            title: 'Calendar 2'
+                            title: 'Calendar 2',
+                            flex: 1
                         }
                     ]
                 }

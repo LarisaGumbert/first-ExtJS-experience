@@ -531,7 +531,7 @@
         "classic": {
             "default": true,
             "toolkit": "classic",
-            "theme": "theme-crisp"
+            "theme": "theme-neptune"
         },
 
         "modern": {

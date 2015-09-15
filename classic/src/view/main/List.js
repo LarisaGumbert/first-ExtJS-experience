@@ -1,6 +1,3 @@
-/**
- * This view is an example list of people.
- */
 Ext.define('TestApp01.view.main.List', {
     extend: 'Ext.panel.Panel',
     xtype: 'mainlist',

@@ -5,3 +5,32 @@
   font-size: 0.85em;
   color: silver;
 }
+
+.calendar-dayofweek-header {
+  border:1px solid gray;
+  background-color: silver;
+  text-align:center;
+  color:white;
+  text-transform:uppercase;
+}
+
+.calendar-day-cell {
+  border:1px solid gray;
+  overflow:auto;
+}
+
+.calendar-day-header {
+  /*background-color:silver;*/
+  font-weight:bold;
+  padding:3px;
+}
+
+.schedule-item-indent {
+  background-color:silver;
+}
+
+.schedule-item-text {
+  background-color:lightsteelblue;
+  padding:0 3px;
+}
+

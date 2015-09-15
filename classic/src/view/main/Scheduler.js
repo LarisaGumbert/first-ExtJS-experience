@@ -1,3 +1,5 @@
+var calendarDate = new Date();//2015, 0, 1);
+
 Ext.define('TestApp01.view.main.Scheduler', {
     extend: 'Ext.panel.Panel',
     xtype: 'scheduler',
@@ -5,6 +7,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
     requires: [
         'TestApp01.store.Schedule'
     ],
+
     items: [
         //left panel
         {
@@ -37,6 +40,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
                         {
                             xtype: 'datepicker',
                             startDay: 1,
+                            value: calendarDate,
                             margin: '0 0 5 0',
                             handler: function(picker, date) {
                                 // do something with the selected date
@@ -45,6 +49,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
                         {
                             xtype: 'datepicker',
                             startDay: 1,
+                            value: Ext.Date.add(calendarDate, Ext.Date.MONTH, 1),
                             margin: '0 0 5 0',
                             handler: function(picker, date) {
                                 // do something with the selected date
@@ -215,13 +220,12 @@ Ext.define('TestApp01.view.main.Scheduler', {
                     style: {
                         fontSize: '1.2em'
                     },
-                    value: (function() { return ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'][new Date().getMonth()] + ' ' + new Date().getFullYear(); })()
+                    value: (function() { return Ext.Date.format(calendarDate, 'M Y'); })()
                 }
             ],
             items: [
                 {
                     xtype: 'tabpanel',
-                    //flex: 1,
                     layout: {
                         type: 'vbox',
                         align: 'stretch'
@@ -229,6 +233,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
                     items: [
                         {
                             title: 'Calendar 1',
+                            margin: '3 0 0 0',
                             flex: 1,
                             items: [
                                 {
@@ -238,13 +243,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
                                         xtype: 'container',
                                         padding: 5,
                                         border: true,
-                                        style: {
-                                            border: '1px solid gray',
-                                            backgroundColor: 'silver',
-                                            textAlign: 'center',
-                                            color: 'white',
-                                            textTransform: 'uppercase'
-                                        },
+                                        cls: 'calendar-dayofweek-header',
                                         columnWidth: 0.142857
                                     },
                                     items: [
@@ -270,40 +269,47 @@ Ext.define('TestApp01.view.main.Scheduler', {
                                                     type: 'vbox',
                                                     align: 'stretch'
                                                 },
-                                                height: 100,
+                                                height: 120,
                                                 border: true,
-                                                style: {
-                                                    border: '1px solid gray'/*,
-                                                    backgroundColor: 'silver',
-                                                    color: 'white'*/
-                                                }
+                                                cls: 'calendar-day-cell'
                                             },
                                             items:
                                                 (function(date) {
-
                                                     var result = [];
                                                     var daysInMonth = Ext.Date.getDaysInMonth(date);
                                                     var dayOfWeek = new Date(date.setDate(1)).getDay();
                                                     if (dayOfWeek == 0) dayOfWeek = 7;
-                                                    var blockQty = (7 - (daysInMonth % 7)) + daysInMonth;
+                                                    var daysToCalc = (daysInMonth - (7 - dayOfWeek + 1));
+                                                    var blockQty = 7 + (7 - (daysToCalc % 7)) + daysToCalc;
+
+                                                    var store = Ext.create('store.schedule');
 
                                                     for (var i = 1, d = 1; i <= blockQty; i++) {
                                                         var block = {};
                                                         if (d <= daysInMonth && ((i <= 7 && i >= (dayOfWeek)) || (i > 7)))
                                                         {
                                                             block = {
+                                                                id: 'day_' + d,
                                                                 items: [
                                                                     {
                                                                         xtype: 'container',
                                                                         height: '1.5em',
-                                                                        style: {
-                                                                            backgroundColor: 'silver',
-                                                                            fontWeight: 'bold'
-                                                                        },
+                                                                        cls: 'calendar-day-header',
                                                                         html: d
                                                                     }
                                                                 ]
                                                             };
+                                                            store.filterBy(function(record) {
+                                                                return Ext.Date.isEqual(Ext.Date.clearTime(record.data.date, true), new Date(date.getFullYear(), date.getMonth(), d));
+                                                            });
+                                                            store.each(function(record) {
+                                                                block.items.push(
+                                                                    {
+                                                                        xtype: 'scheduleItem',
+                                                                        text: '<b>' + Ext.Date.format(record.data.date, 'H:i') + '</b> ' + record.data.caption
+                                                                    }
+                                                                );
+                                                            });
 
                                                             d++;
                                                         }
@@ -311,7 +317,7 @@ Ext.define('TestApp01.view.main.Scheduler', {
                                                     }
 
                                                     return result;
-                                                })(new Date())
+                                                })(calendarDate)
                                         }
                                     ]
                                 }
